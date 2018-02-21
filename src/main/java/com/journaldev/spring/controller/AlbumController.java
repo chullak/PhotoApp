@@ -25,7 +25,6 @@ import com.journaldev.spring.service.AlbumService;
  * Handles requests for the Employee service.
  */
 @Controller
-@RequestMapping(value = "/album")
 
 public class AlbumController {
 
@@ -34,7 +33,8 @@ public class AlbumController {
 	@Inject
 	AlbumService albumService;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/album", method = RequestMethod.GET)
 	public ResponseEntity<List<Album>> list() {
 		List<Album> albums = albumService.list();
 		if (albums.isEmpty()) {
@@ -43,7 +43,7 @@ public class AlbumController {
 		return new ResponseEntity<List<Album>>(albums, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/album/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Album> get(@PathVariable("id") int id) {
 		logger.info("Fetching Album with id " + id);
 		Album album = albumService.findById(id);
@@ -54,7 +54,7 @@ public class AlbumController {
 		return new ResponseEntity<Album>(album, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/album", method = RequestMethod.POST)
 	public ResponseEntity<Void> create(@RequestBody Album album, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating Album " + album.getId());
 
@@ -65,7 +65,7 @@ public class AlbumController {
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/album/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Album> update(@PathVariable("id") int id, @RequestBody Album album) {
 		logger.info("Updating Album " + id);
 
@@ -82,7 +82,7 @@ public class AlbumController {
 		return new ResponseEntity<Album>(currentalbum, HttpStatus.OK);
 	}
 	
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/album/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Album> delete(@PathVariable("id") int id) {
         logger.info("Fetching & Deleting Album with id " + id);
  
@@ -94,5 +94,14 @@ public class AlbumController {
  
         return new ResponseEntity<Album>(HttpStatus.NO_CONTENT);
     }
+
+	@RequestMapping(value = "/user/{id}/album", method = RequestMethod.GET)
+	public ResponseEntity<List<Album>> list(@PathVariable("id") int userId) {
+		List<Album> albums = albumService.list(userId);
+		if (albums.isEmpty()) {
+			return new ResponseEntity<List<Album>>(HttpStatus.NO_CONTENT);// You
+		}
+		return new ResponseEntity<List<Album>>(albums, HttpStatus.OK);
+	}
 
 }

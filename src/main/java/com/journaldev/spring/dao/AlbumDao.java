@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
 import com.journaldev.spring.model.Album;
@@ -89,5 +90,14 @@ public class AlbumDao implements Dao<Album> {
 
 		return false;
 	}
+
+	public List<Album> listByUserID(int userId) {
+		Session session = sessionFactory.openSession();
+		List<Album> result = session.createCriteria(Album.class).add(Restrictions.eq("userId", userId)).list();
+		session.close();
+		// TODO Auto-generated method stub
+		return result;
+
+}
 
 }

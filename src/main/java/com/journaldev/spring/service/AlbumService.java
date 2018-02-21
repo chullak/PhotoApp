@@ -29,12 +29,16 @@ public class AlbumService {
 
 	public void update(Album album) {
 		albumDao.update(album);
-		
+
 	}
 
 	public void delete(Album album) {
 		albumDao.delete(album);
-		
+
+	}
+
+	public List<Album> list(int userId) {
+		return albumDao.listByUserID(userId);
 	}
 
 }

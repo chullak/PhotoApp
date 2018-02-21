@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
 import com.journaldev.spring.model.Photo;
@@ -88,6 +89,14 @@ public class PhotoDao implements Dao<Photo> {
 		session.close();
 
 		return false;
+	}
+
+	public List<Photo> listByAblum(int albumId) {
+		Session session = sessionFactory.openSession();
+		List<Photo> result = session.createCriteria(Photo.class).add(Restrictions.eq("albumId", albumId)).list();
+		session.close();
+		// TODO Auto-generated method stub
+		return result;
 	}
 
 }
