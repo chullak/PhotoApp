@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.journaldev.spring.model.User;
-import com.journaldev.spring.model.User;
 import com.journaldev.spring.service.UserService;
 
 /**
@@ -26,7 +25,7 @@ import com.journaldev.spring.service.UserService;
  */
 @Controller
 
-public class UserController {
+public class UserController extends BaseController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 

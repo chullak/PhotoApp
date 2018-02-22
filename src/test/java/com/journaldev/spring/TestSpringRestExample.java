@@ -2,9 +2,9 @@ package com.journaldev.spring;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.journaldev.spring.dao.AlbumDao;
+import com.journaldev.spring.dao.DBLockDao;
 import com.journaldev.spring.dao.UserDao;
-import com.journaldev.spring.model.Album;
+import com.journaldev.spring.model.Company;
 import com.journaldev.spring.model.User;
 
 public class TestSpringRestExample {
@@ -15,14 +15,13 @@ public class TestSpringRestExample {
 
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("root-context.xml");
 
-		ctx.getBean(AlbumDao.class);
-		UserDao userDao = ctx.getBean(UserDao.class);
-		;
-		User user = new User();
-		user.setName("asas");
-		user.setUsername("assas");
+		ctx.getBean(DBLockDao.class);
+		DBLockDao dbLockDao = ctx.getBean(DBLockDao.class);
 
-		userDao.save(user);
+		dbLockDao.add();
+	System.out.println(	dbLockDao.isDataloadInProgress());
+	dbLockDao.clear();
+	System.out.println(	dbLockDao.isDataloadInProgress());
 
 	}
 

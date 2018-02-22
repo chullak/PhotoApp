@@ -26,7 +26,7 @@ import com.journaldev.spring.service.PhotoService;
  */
 @Controller
 
-public class PhotoController {
+public class PhotoController extends BaseController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PhotoController.class);
 

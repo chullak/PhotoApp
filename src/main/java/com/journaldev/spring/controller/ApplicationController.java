@@ -18,7 +18,7 @@ import com.journaldev.spring.service.ApplicationService;
  * Handles requests for the Employee service.
  */
 @Controller
-public class ApplicationController {
+public class ApplicationController extends BaseController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ApplicationController.class);
 

@@ -25,7 +25,7 @@ import com.journaldev.spring.service.AlbumService;
  */
 @Controller
 
-public class AlbumController {
+public class AlbumController extends BaseController {
 
 	private static final Logger logger = LoggerFactory.getLogger(AlbumController.class);
 
