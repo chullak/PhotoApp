@@ -26,6 +26,9 @@
 				<value>com.journaldev.spring.model.User</value>
 				<value>com.journaldev.spring.model.Company</value>
 				<value>com.journaldev.spring.model.Photo</value>
+				<value>com.journaldev.spring.model.DBLock</value>
+			
+			
 
 			</list>
 		</property>

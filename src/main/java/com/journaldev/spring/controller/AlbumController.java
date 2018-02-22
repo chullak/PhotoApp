@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.journaldev.spring.model.Album;
-import com.journaldev.spring.model.User;
 import com.journaldev.spring.service.AlbumService;
 
 /**
@@ -34,14 +33,6 @@ public class AlbumController {
 	AlbumService albumService;
 
 	
-	@RequestMapping(value = "/album", method = RequestMethod.GET)
-	public ResponseEntity<List<Album>> list() {
-		List<Album> albums = albumService.list();
-		if (albums.isEmpty()) {
-			return new ResponseEntity<List<Album>>(HttpStatus.NO_CONTENT);// You
-		}
-		return new ResponseEntity<List<Album>>(albums, HttpStatus.OK);
-	}
 
 	@RequestMapping(value = "/album/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Album> get(@PathVariable("id") int id) {
@@ -91,6 +82,7 @@ public class AlbumController {
             logger.info("Unable to delete. Album with id " + id + " not found");
             return new ResponseEntity<Album>(HttpStatus.NOT_FOUND);
         }
+        albumService.delete(album);
  
         return new ResponseEntity<Album>(HttpStatus.NO_CONTENT);
     }

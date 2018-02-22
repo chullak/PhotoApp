@@ -33,6 +33,7 @@ public class UserController {
 	@Inject
 	UserService userService;
 
+	
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> list() {
 		List<User> users = userService.list();

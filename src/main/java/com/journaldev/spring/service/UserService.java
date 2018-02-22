@@ -15,6 +15,7 @@ public class UserService {
 	@Inject
 	UserDao userDao;
 
+	
 	public List<User> list() {
 		return userDao.list();
 	}

@@ -1,10 +1,10 @@
 package com.journaldev.spring.model;
 
-import javax.persistence.Basic;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,7 +16,7 @@ public class User {
 	@Id
 	int id;
 	String name;
-	
+
 	String username;
 	String email;
 	@Embedded
@@ -24,7 +24,10 @@ public class User {
 	String phone;
 	String website;
 
-	
+	@ManyToOne
+	@JoinColumn(name="company_id")
+	Company company;
+
 	public int getId() {
 		return id;
 	}
@@ -81,5 +84,12 @@ public class User {
 		this.website = website;
 	}
 
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 
 }

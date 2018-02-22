@@ -4,11 +4,14 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.journaldev.spring.model.Album;
 import com.journaldev.spring.service.ApplicationService;
 
 /**
@@ -23,10 +26,10 @@ public class ApplicationController {
 	ApplicationService applicationService;
 
 	@RequestMapping(value = RestURIConstants.DUMMY_EMP, method = RequestMethod.GET)
-	public @ResponseBody String getDummyEmployee() {
+	public @ResponseBody ResponseEntity<Void> getDummyEmployee() {
 		System.out.println("Started");
 		applicationService.refresh();
-		return "Sucess";
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 }

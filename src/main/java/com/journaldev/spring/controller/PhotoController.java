@@ -33,16 +33,6 @@ public class PhotoController {
 	@Inject
 	PhotoService photoService;
 
-
-	@RequestMapping(value = "/photo", method = RequestMethod.GET)
-	public ResponseEntity<List<Photo>> list() {
-		List<Photo> photos = photoService.list();
-		if (photos.isEmpty()) {
-			return new ResponseEntity<List<Photo>>(HttpStatus.NO_CONTENT);// You
-		}
-		return new ResponseEntity<List<Photo>>(photos, HttpStatus.OK);
-	}
-
 	@RequestMapping(value = "/photo/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Photo> get(@PathVariable("id") int id) {
 		logger.info("Fetching Photo with id " + id);
@@ -81,25 +71,25 @@ public class PhotoController {
 		currentphoto.setThumbnailUrl(photo.getThumbnailUrl());
 		currentphoto.setUrl(photo.getUrl());
 
-		
 		photoService.update(currentphoto);
 		return new ResponseEntity<Photo>(currentphoto, HttpStatus.OK);
 	}
-	
-    @RequestMapping(value = "/photo/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Photo> delete(@PathVariable("id") int id) {
-        logger.info("Fetching & Deleting Photo with id " + id);
- 
-        Photo photo = photoService.findById(id);
-        if (photo == null) {
-            logger.info("Unable to delete. Photo with id " + id + " not found");
-            return new ResponseEntity<Photo>(HttpStatus.NOT_FOUND);
-        }
- 
-        return new ResponseEntity<Photo>(HttpStatus.NO_CONTENT);
-    }
-    
-    @RequestMapping(value = "/album/{id}/photo", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/photo/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Photo> delete(@PathVariable("id") int id) {
+		logger.info("Fetching & Deleting Photo with id " + id);
+
+		Photo photo = photoService.findById(id);
+		if (photo == null) {
+			logger.info("Unable to delete. Photo with id " + id + " not found");
+			return new ResponseEntity<Photo>(HttpStatus.NOT_FOUND);
+		}
+		photoService.delete(photo);
+
+		return new ResponseEntity<Photo>(HttpStatus.NO_CONTENT);
+	}
+
+	@RequestMapping(value = "/album/{id}/photo", method = RequestMethod.GET)
 	public ResponseEntity<List<Photo>> listByAlbum(@PathVariable("id") int albumId) {
 		List<Photo> photos = photoService.listByAblum(albumId);
 		if (photos.isEmpty()) {
@@ -107,7 +97,5 @@ public class PhotoController {
 		}
 		return new ResponseEntity<List<Photo>>(photos, HttpStatus.OK);
 	}
-
-    
 
 }

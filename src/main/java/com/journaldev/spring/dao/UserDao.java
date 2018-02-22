@@ -20,18 +20,20 @@ public class UserDao implements Dao<User> {
 
 	public boolean saveAll(List<User> list) {
 
-		try{
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		for (User a : list) {
-			
-			session.persist(a);
-		}
-		tx.commit();
-		session.close();
-		}catch(Exception ex){
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+			for (User user : list) {
+				if (user.getCompany() != null)
+					session.saveOrUpdate(user.getCompany());
+
+				session.persist(user);
+			}
+			tx.commit();
+			session.close();
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			
+
 		}
 		return true;
 	}
@@ -39,8 +41,12 @@ public class UserDao implements Dao<User> {
 	@Override
 	public boolean save(User obj) {
 		Session session = sessionFactory.openSession();
+
 		Transaction tx = session.beginTransaction();
-		session.persist(obj);
+		if (obj.getCompany() != null)
+			session.saveOrUpdate(obj.getCompany());
+
+		session.saveOrUpdate(obj);
 		tx.commit();
 		session.close();
 		return true;
@@ -87,8 +93,11 @@ public class UserDao implements Dao<User> {
 	public boolean deleteAll() {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		String stringQuery = "delete from User";
+		String stringQuery = "delete from Company";
 		Query query = session.createQuery(stringQuery);
+
+		stringQuery = "delete from User";
+		query = session.createQuery(stringQuery);
 		query.executeUpdate();
 		tx.commit();
 		session.close();
