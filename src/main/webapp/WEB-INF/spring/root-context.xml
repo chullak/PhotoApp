@@ -18,13 +18,13 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="annotatedClasses">
 			<list>
-				<value>com.journaldev.spring.model.Album</value>
-				<value>com.journaldev.spring.model.Address</value>
-				<value>com.journaldev.spring.model.Geolocation</value>
-				<value>com.journaldev.spring.model.User</value>
-				<value>com.journaldev.spring.model.Company</value>
-				<value>com.journaldev.spring.model.Photo</value>
-				<value>com.journaldev.spring.model.DBLock</value>
+				<value>com.code.challenge.model.Album</value>
+				<value>com.code.challenge.model.Address</value>
+				<value>com.code.challenge.model.Geolocation</value>
+				<value>com.code.challenge.model.User</value>
+				<value>com.code.challenge.model.Company</value>
+				<value>com.code.challenge.model.Photo</value>
+				<value>com.code.challenge.model.DBLock</value>
 
 			</list>
 		</property>
