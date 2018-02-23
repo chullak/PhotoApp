@@ -1,54 +1,45 @@
 package com.journaldev.spring.service;
 
+import java.util.Map.Entry;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
 
-import com.journaldev.spring.client.AlbumRestClient;
-import com.journaldev.spring.client.PhotoRestClient;
-import com.journaldev.spring.client.UserRestClient;
-import com.journaldev.spring.dao.AlbumDao;
+import com.journaldev.spring.config.DataLoadConfig;
 import com.journaldev.spring.dao.DBLockDao;
-import com.journaldev.spring.dao.PhotoDao;
-import com.journaldev.spring.dao.UserDao;
+import com.journaldev.spring.dao.Dao;
+import com.journaldev.spring.http.client.RestClient;
 
 @Component
 public class ApplicationService {
-
 	@Inject
-	AlbumRestClient albumRestClient;
-
-	@Inject
-	PhotoRestClient photoRestClient;
-
-	@Inject
-	UserRestClient userRestClient;
-
-	@Inject
-	AlbumDao albumDao;
-
-	@Inject
-	UserDao userDao;
-
-	@Inject
-	PhotoDao photoDao;
-
+	DataLoadConfig  dataLoadConfig;
+	
 	@Inject
 	DBLockDao dbLockDao;
 
 	public boolean refresh() {
 		// add the entry in db Lock table to indicate the data loading in
 		// progress
+		if(!dbLockDao.isDataloadInProgress()){
 		dbLockDao.add();
-		albumDao.deleteAll();
-		albumDao.saveAll(albumRestClient.getPhoto());
-		photoDao.deleteAll();
-		photoDao.saveAll(photoRestClient.getPhoto());
-		userDao.deleteAll();
-		userDao.saveAll(userRestClient.getPhoto());
+		Dao dao;
+		RestClient restClient;
+		for(Entry<RestClient, Dao> entry: dataLoadConfig.getDataloaders().entrySet())
+		{
+			restClient=entry.getKey();
+			dao=entry.getValue();
+			dao.deleteAll();
+			dao.saveAll(restClient.getList());
+			
+		}	
 		System.out.println("done");
 		dbLockDao.clear();
-
+		}else{
+			
+			throw new RuntimeException("DataLoad is aready in progress");
+		}
 		return true;
 	}
 

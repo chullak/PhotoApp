@@ -21,6 +21,7 @@ public class BaseController {
 	@ExceptionHandler({ Exception.class })
 	public ResponseEntity<ErrorDetails> handleException(Exception ex, WebRequest request) {
 		ErrorDetails errorDetails=new ErrorDetails();
+		logger.error("Error",ex);
 		errorDetails.setErrorDetails(ex.getMessage());
 		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 

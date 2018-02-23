@@ -1,4 +1,4 @@
-package com.journaldev.spring.client;
+package com.journaldev.spring.http.client.impl;
 
 import java.util.List;
 
@@ -10,19 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.journaldev.spring.http.client.RestClient;
 import com.journaldev.spring.model.Photo;
 
 @Component
-public class PhotoRestClient {
-	private static final String HTTPS_JSONPLACEHOLDER_TYPICODE_COM_PHOTOS = "https://jsonplaceholder.typicode.com/photos";
-
+public class PhotoRestClient implements RestClient<Photo> {
 	@Inject
 	RestTemplate restTemplate;
 
-	public List<Photo> getPhoto() {
+	@Override
+	public List<Photo> getList() {
 
-		ResponseEntity<List<Photo>> rateResponse = restTemplate.exchange(HTTPS_JSONPLACEHOLDER_TYPICODE_COM_PHOTOS,
-				HttpMethod.GET, null, new ParameterizedTypeReference<List<Photo>>() {
+		ResponseEntity<List<Photo>> rateResponse = restTemplate.exchange(PHOTOS_URL, HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Photo>>() {
 				});
 		List<Photo> photo = rateResponse.getBody();
 		return photo;

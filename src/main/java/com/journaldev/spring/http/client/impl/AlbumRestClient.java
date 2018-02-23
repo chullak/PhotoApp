@@ -1,4 +1,4 @@
-package com.journaldev.spring.client;
+package com.journaldev.spring.http.client.impl;
 
 import java.util.List;
 
@@ -10,18 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.journaldev.spring.http.client.RestClient;
 import com.journaldev.spring.model.Album;
 
 @Component
-public class AlbumRestClient {
-	private static final String HTTPS_ABBUMS_URI = "https://jsonplaceholder.typicode.com/albums";
+public class AlbumRestClient implements RestClient<Album> {
 
 	@Inject
 	RestTemplate restTemplate;
 
-	public List<Album> getPhoto() {
+	@Override
+	public List<Album> getList() {
 
-		ResponseEntity<List<Album>> rateResponse = restTemplate.exchange(HTTPS_ABBUMS_URI, HttpMethod.GET, null,
+		ResponseEntity<List<Album>> rateResponse = restTemplate.exchange(ALBUMS_URL, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Album>>() {
 				});
 		List<Album> albums = rateResponse.getBody();

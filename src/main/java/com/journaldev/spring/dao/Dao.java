@@ -16,4 +16,6 @@ public interface Dao<T> {
 
 	public boolean deleteAll();
 
+	void update(T obj);
+
 }
